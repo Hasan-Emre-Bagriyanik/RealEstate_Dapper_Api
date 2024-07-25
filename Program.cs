@@ -1,13 +1,16 @@
 
+using RealEstate_Dapper_Api.Hubs;
 using RealEstate_Dapper_Api.Models.DapperContext;
 using RealEstate_Dapper_Api.Repositories.BottomGridReposities;
 using RealEstate_Dapper_Api.Repositories.CategoryRepository;
+using RealEstate_Dapper_Api.Repositories.ContactRepositories;
 using RealEstate_Dapper_Api.Repositories.EmployeeRepositories;
 using RealEstate_Dapper_Api.Repositories.PopularLocationRepositories;
 using RealEstate_Dapper_Api.Repositories.ProductRepository;
 using RealEstate_Dapper_Api.Repositories.ServiceRepository;
 using RealEstate_Dapper_Api.Repositories.StatisticsRepositories;
 using RealEstate_Dapper_Api.Repositories.TestimonialRepositories;
+using RealEstate_Dapper_Api.Repositories.ToDoListRepositories;
 using RealEstate_Dapper_Api.Repositories.WhoWeAreRepository;
 
 namespace RealEstate_Dapper_Api
@@ -29,6 +32,26 @@ namespace RealEstate_Dapper_Api
             builder.Services.AddTransient<ITestimonialRepository,TestimonialRepository>();
             builder.Services.AddTransient<IEmployeeRepository,EmployeeRepository>();
             builder.Services.AddTransient<IStatisticsRepository,StatisticsRepository>();
+            builder.Services.AddTransient<IContactRepository,ContactRepository>();
+            builder.Services.AddTransient<IToDoListRepository,ToDoListRepository>();
+
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .SetIsOriginAllowed((host) => true)
+                           .AllowCredentials();
+                });
+            });
+            builder.Services.AddHttpClient();
+
+            builder.Services.AddSignalR();  
+
+
+
+
             builder.Services.AddControllers();
             builder.Services.AddAuthorization();
 
@@ -45,6 +68,8 @@ namespace RealEstate_Dapper_Api
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("CorsPolicy");
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
@@ -52,6 +77,7 @@ namespace RealEstate_Dapper_Api
             app.MapControllers();
             //localhost:1234/swagger/category/index
             //localhost:1234/signalrhu
+            app.MapHub<SignalRHub>("/signalrhub");
             app.Run();
         }
     }
