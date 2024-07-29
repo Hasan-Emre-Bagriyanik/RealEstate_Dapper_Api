@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using RealEstate_Dapper_Api.Dtos.CategoryDtos;
 using RealEstate_Dapper_Api.Dtos.EmployeeDtos;
 using RealEstate_Dapper_Api.Models.DapperContext;
 
@@ -8,12 +7,10 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
     public class StatisticsRepository : IStatisticsRepository
     {
         private readonly Context _context;
-
         public StatisticsRepository(Context context)
         {
             _context = context;
         }
-
         public int ActiveCategoryCount()
         {
             string query = "Select Count(*) From Category where CategoryStatus=1";
@@ -46,7 +43,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public decimal AverageProductPriceByRent()
         {
-            string query = "Select Avg(Price) From Product where Type = 'Kiralık'";
+            string query = "Select Avg(Price) From Product where Type='Kiralık'";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<decimal>(query);
@@ -56,7 +53,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public decimal AverageProductPriceBySale()
         {
-            string query = "Select Avg(Price) From Product where Type = 'Satılık'";
+            string query = "Select Avg(Price) From Product where Type='Satılık'";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<decimal>(query);
@@ -64,7 +61,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
             }
         }
 
-        public int AverageRoomCount()
+        public int AvereageRoomCount()
         {
             string query = "Select Avg(RoomCount) From ProductDetails";
             using (var connection = _context.CreateConnection())
@@ -76,7 +73,6 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public int CategoryCount()
         {
-
             string query = "Select Count(*) From Category";
             using (var connection = _context.CreateConnection())
             {
@@ -87,8 +83,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public string CategoryNameByMaxProductCount()
         {
-            string query = "Select top(1) CategoryName, Count(*) From Product inner join Category on " +
-                "Product.ProductCategory = Category.CategoryID Group By CategoryName Order By Count(*) Desc";
+            string query = "Select top(1) CategoryName,Count(*) From Product inner join Category On Product.ProductCategory=Category.CategoryID Group By CategoryName order by Count(*) Desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<string>(query);
@@ -98,17 +93,16 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public string CityNameByMaxProductCount()
         {
-            string query = "select top(1) City,Count(*) From Product Group by City order by Count(*) desc";
+            string query = "Select Top(1) City,Count(*) as 'product_count' From Product Group By City order by product_count Desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<string>(query);
                 return values;
             }
         }
-
         public int DifferentCityCount()
         {
-            string query = "select  count(Distinct(City)) from Product";
+            string query = "Select Count(Distinct(City)) From Product";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<int>(query);
@@ -118,8 +112,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public string EmployeeNameByMaxProductCount()
         {
-            string query = "select EmployeeName,Count(*) from Product inner join Employee on " +
-                "Product.EmployeeID = Employee.EmployeeID group by EmployeeName order by Count(*) desc";
+            string query = "Select EmployeeName,Count(*) 'product_count' From Product Inner Join Employee \nOn Product.AppUserId=Employee.EmployeeID Group By EmployeeName Order By product_count Desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<string>(query);
@@ -129,7 +122,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public decimal LastProductPrice()
         {
-            string query = "select top(1) Price from Product order by ProductID desc";
+            string query = "Select Top(1) Price From Product Order By ProductId Desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<decimal>(query);
@@ -139,7 +132,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public string NewestBuildingYear()
         {
-            string query = "select top(1) BuildYear from ProductDetails order by BuildYear desc";
+            string query = "Select Top(1) BuildYear From ProductDetails Order By BuildYear Desc";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<string>(query);
@@ -149,7 +142,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public string OldestBuildingYear()
         {
-            string query = "select top(1) BuildYear from ProductDetails order by BuildYear asc";
+            string query = "Select Top(1) BuildYear From ProductDetails Order By BuildYear Asc";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<string>(query);
@@ -159,7 +152,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public int PassiveCategoryCount()
         {
-            string query = "select Count(*)  from Category where CategoryStatus=0";
+            string query = "Select Count(*) From Category Where CategoryStatus=0";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<int>(query);
@@ -169,7 +162,7 @@ namespace RealEstate_Dapper_Api.Repositories.StatisticsRepositories
 
         public int ProductCount()
         {
-            string query = "select Count(*)  from Product";
+            string query = "Select Count(*) From Product";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<int>(query);

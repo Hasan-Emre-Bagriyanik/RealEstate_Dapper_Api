@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RealEstate_Dapper_Api.Repositories.EmployeeRepositories;
 using RealEstate_Dapper_Api.Repositories.ToDoListRepositories;
 
 namespace RealEstate_Dapper_Api.Controllers
@@ -9,17 +8,16 @@ namespace RealEstate_Dapper_Api.Controllers
     [ApiController]
     public class ToDoListsController : ControllerBase
     {
-        private readonly IToDoListRepository _toDoListRepository;
-
-        public ToDoListsController(IToDoListRepository toDoListRepository)
+        private readonly IToDoListRepository _ToDoListRepository;
+        public ToDoListsController(IToDoListRepository ToDoListRepository)
         {
-            _toDoListRepository = toDoListRepository;
+            _ToDoListRepository = ToDoListRepository;
         }
 
         [HttpGet]
-        public async Task<IActionResult> EmplopyeeList()
+        public async Task<IActionResult> ToDoListList()
         {
-            var values = await _toDoListRepository.GetAllToDoListAsync();
+            var values = await _ToDoListRepository.GetAllToDoList();
             return Ok(values);
         }
     }

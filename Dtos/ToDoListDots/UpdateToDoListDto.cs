@@ -1,6 +1,6 @@
-﻿namespace RealEstate_Dapper_Api.Dtos.ToDoListDtos
+﻿namespace RealEstate_Dapper_Api.Dtos.ToDoListDots
 {
-    public class ResultToDoListDto
+    public class UpdateToDoListDto
     {
         public int ToDoListID { get; set; }
         public string Description { get; set; }

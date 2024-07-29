@@ -16,8 +16,8 @@
         decimal LastProductPrice();
         string NewestBuildingYear();
         string OldestBuildingYear();
-        int AverageRoomCount();
         int ActiveEmployeeCount();
+        int AvereageRoomCount();
 
     }
 }

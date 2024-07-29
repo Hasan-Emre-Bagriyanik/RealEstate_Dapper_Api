@@ -9,15 +9,15 @@ namespace RealEstate_Dapper_Api.Controllers
     public class StatisticsController : ControllerBase
     {
         private readonly IStatisticsRepository _statisticsRepository;
-
         public StatisticsController(IStatisticsRepository statisticsRepository)
         {
-            this._statisticsRepository = statisticsRepository;
+            _statisticsRepository = statisticsRepository;
         }
+        //ActiveEmployeeCount
 
         [HttpGet("ActiveCategoryCount")]
-        public IActionResult ActiveCategoryCount() 
-        { 
+        public IActionResult ActiveCategoryCount()
+        {
             return Ok(_statisticsRepository.ActiveCategoryCount());
         }
 
@@ -45,10 +45,10 @@ namespace RealEstate_Dapper_Api.Controllers
             return Ok(_statisticsRepository.AverageProductPriceBySale());
         }
 
-        [HttpGet("AverageRoomCount")]
-        public IActionResult AverageRoomCount()
+        [HttpGet("AvereageRoomCount")]
+        public IActionResult AvereageRoomCount()
         {
-            return Ok(_statisticsRepository.AverageRoomCount());
+            return Ok(_statisticsRepository.AvereageRoomCount());
         }
 
         [HttpGet("CategoryCount")]
@@ -74,7 +74,6 @@ namespace RealEstate_Dapper_Api.Controllers
         {
             return Ok(_statisticsRepository.DifferentCityCount());
         }
-
 
         [HttpGet("EmployeeNameByMaxProductCount")]
         public IActionResult EmployeeNameByMaxProductCount()

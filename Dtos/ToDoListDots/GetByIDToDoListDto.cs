@@ -1,4 +1,4 @@
-﻿namespace RealEstate_Dapper_Api.Dtos.ToDoListDtos
+﻿namespace RealEstate_Dapper_Api.Dtos.ToDoListDots
 {
     public class GetByIDToDoListDto
     {

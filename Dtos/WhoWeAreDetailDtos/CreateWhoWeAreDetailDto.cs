@@ -2,10 +2,9 @@
 {
     public class CreateWhoWeAreDetailDto
     {
-        public String Title { get; set; }
-        public String Subtitle { get; set; }
-        public String Description1 { get; set; }
-        public String Description2 { get; set; }
-
+        public string Title { get; set; }
+        public string Subtitle { get; set; }
+        public string Description1 { get; set; }
+        public string Description2 { get; set; }
     }
 }
